@@ -552,9 +552,14 @@
     <div id="pdfModal" class="mobile-modal hidden">
         <div class="modal-header">
             <h3 id="pdfTitle" class="text-lg font-semibold text-gray-800 flex-1"></h3>
-            <button onclick="closePdfModal()" class="modal-close">
-                <i class="fas fa-times"></i>
-            </button>
+            <div class="flex gap-2">
+                <button id="openPdfNewTab" class="modal-close" title="فتح في نافذة جديدة">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+                <button onclick="closePdfModal()" class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         </div>
         <div class="modal-content">
             <div class="pdf-container">

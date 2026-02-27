@@ -23,6 +23,10 @@ const playBtn = document.getElementById('playBtn');
 const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const timeDisplay = document.getElementById('timeDisplay');
+const openPdfNewTabBtn = document.getElementById('openPdfNewTab');
+
+// Global variable to store current PDF path
+let currentPdfPath = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -181,6 +185,16 @@ function setupEventListeners() {
         }
     });
 
+    // Open PDF in new tab button
+    if (openPdfNewTabBtn) {
+        openPdfNewTabBtn.addEventListener('click', function() {
+            if (currentPdfPath) {
+                const encodedPath = encodeURIComponent(currentPdfPath);
+                window.open(encodedPath, '_blank');
+            }
+        });
+    }
+
     // Audio player controls
     playBtn.addEventListener('click', togglePlayPause);
     progressBar.addEventListener('click', seekAudio);
@@ -238,7 +252,25 @@ function switchSection(section) {
 // Open PDF modal
 function openPdfModal(title, path) {
     document.getElementById('pdfTitle').textContent = title;
-    document.getElementById('pdfViewer').src = path;
+    
+    // Store current PDF path for new tab functionality
+    currentPdfPath = path;
+    
+    // Encode the PDF path for proper Arabic character handling
+    const encodedPath = encodeURIComponent(path);
+    
+    // Try direct PDF viewer first
+    const pdfViewer = document.getElementById('pdfViewer');
+    
+    // Check if mobile and use Google Drive Viewer as fallback
+    if (window.innerWidth < 768) {
+        // Use Google Drive Viewer for better mobile compatibility
+        pdfViewer.src = `https://docs.google.com/viewer?url=${encodedPath}&embedded=true`;
+    } else {
+        // Use direct path for desktop
+        pdfViewer.src = encodedPath;
+    }
+    
     pdfModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     
