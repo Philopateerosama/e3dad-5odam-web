@@ -26,73 +26,85 @@ const LECTURES_DATA = [
     { id: 16, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat/16.pdf' }
 ];
 
-// Hardcoded data map for hymns (Franko filenames with Arabic titles)
+// Hardcoded data map for hymns (Franko filenames with Arabic titles and multiple images)
 const HYMNS_DATA = [
     { 
         id: 1, 
         title: 'أمين أمين طون ثاناطون',
         audioFile: 'amen amen.ogg',
-        imageFile: 'amen amen.jpg'
+        images: ['amen amen.jpg']
     },
     { 
         id: 2, 
         title: 'ارباع الناقوس آدام',
         audioFile: 'arba3 el na2os adam.ogg',
-        imageFile: 'arba3 el na2os adam.jpg'
+        images: ['arba3 el na2os adam.jpg']
     },
     { 
         id: 3, 
         title: 'ارباع الناقوس واطس',
         audioFile: 'arba3 el na2os watos.ogg',
-        imageFile: 'arba3 el na2os watos.jpg'
+        images: ['arba3 el na2os watos.jpg']
     },
     { 
         id: 4, 
         title: 'الليلويا فاى بيبى (1)',
         audioFile: 'aleloya.ogg',
-        imageFile: 'aleloya.jpg'
+        images: ['aleloya.jpg']
     },
     { 
         id: 5, 
         title: 'الليلويا فاى بيبى (2)',
         audioFile: 'aleloya.ogg',
-        imageFile: 'aleloya.jpg'
+        images: ['aleloya.jpg']
     },
     { 
         id: 6, 
         title: 'الهيتنات السنوى',
         audioFile: 'el hetnyat el snawya.ogg',
-        imageFile: 'el hetnyat el snawya 1.jpg'
+        images: [
+            'el hetnyat el snawya 1.jpg',
+            'el hetnyat el snawya 2.jpg',
+            'el hetnyat el snawya 3.jpg',
+            'el hetnyat el snawya 4.jpg',
+            'el hetnyat el snawya 5.jpg',
+            'el hetnyat el snawya 6.jpg',
+            'el hetnyat el snawya 7.jpg'
+        ]
     },
     { 
         id: 7, 
         title: 'تى شورى',
         audioFile: 'te shory.ogg',
-        imageFile: 'te shory.jpg'
+        images: ['te shory.jpg']
     },
     { 
         id: 8, 
         title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر',
         audioFile: 'zocsologya.ogg',
-        imageFile: 'zocsologya 1.jpg'
+        images: [
+            'zocsologya 1.jpg',
+            'zocsologya 2.jpg',
+            'zocsologya 3.jpg'
+        ]
     },
     { 
         id: 9, 
         title: 'مرد أنجيل عيد الميلاد',
         audioFile: '3ed el melad.ogg',
-        imageFile: '3ed el melad.jpg'
+        images: ['3ed el melad.jpg']
     },
     { 
         id: 10, 
         title: 'مرد انجيل الاحد الاول والثانى',
         audioFile: 'mard engeal awle 7aden.ogg',
-        imageFile: 'mard engeal awel 7aden.jpg'
+        images: ['mard engeal awel 7aden.jpg']
     },
     { 
         id: 11, 
         title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك',
         audioFile: 'mard engeal tane 7adean.ogg',
-        imageFile: 'mard engeal tane 7adean.jpg'
+        images: ['mard engeal tane 7adean.jpg']
     }
 ];
 
@@ -101,6 +113,8 @@ let lectures = [];
 let hymns = [];
 let currentAudio = null;
 let isPlaying = false;
+let currentHymnImages = [];
+let currentImageIndex = 0;
 
 // DOM Elements
 const navItems = document.querySelectorAll('.nav-item');
@@ -143,12 +157,12 @@ async function loadLectures() {
 // Load hymns data
 async function loadHymns() {
     try {
-        // Use Franko filenames with Arabic titles
+        // Use Franko filenames with Arabic titles and multiple images
         hymns = HYMNS_DATA.map(hymn => ({
             id: hymn.id,
             name: hymn.title,
             audioFile: hymn.audioFile,
-            imageFile: hymn.imageFile
+            images: hymn.images
         }));
 
         console.log('Loaded hymns:', hymns);
@@ -194,7 +208,7 @@ function displayHymns(searchTerm = '') {
     );
 
     hymnsList.innerHTML = filteredHymns.map(hymn => `
-        <div class="hymn-card" onclick="openHymnModal('${hymn.name}', '${hymn.audioFile}', '${hymn.imageFile}')">
+        <div class="hymn-card" onclick="openHymnModal('${hymn.name}', '${hymn.audioFile}', ${JSON.stringify(hymn.images).replace(/"/g, '&quot;')})">
             <div class="flex items-center space-x-reverse space-x-3">
                 <div class="mary-blue p-3 rounded-full">
                     <i class="fas fa-music light-blue-accent text-lg"></i>
@@ -204,6 +218,7 @@ function displayHymns(searchTerm = '') {
                     <div class="lecture-meta">
                         <i class="fas fa-headphones ml-2 text-xs gold-accent"></i>
                         اضغط للاستماع والمشاهدة
+                        ${hymn.images.length > 1 ? `<span class="ml-2 text-xs text-gray-500">(${hymn.images.length} صور)</span>` : ''}
                     </div>
                 </div>
                 <i class="fas fa-chevron-left text-gray-400"></i>
@@ -337,38 +352,28 @@ function closePdfModal() {
 }
 
 // Open hymn modal
-function openHymnModal(title, audioFile, imageFile) {
-    console.log('Attempting to open hymn:', { title, audioFile, imageFile });
+function openHymnModal(title, audioFile, images) {
+    console.log('Attempting to open hymn:', { title, audioFile, images });
     document.getElementById('hymnTitle').textContent = title;
     
-    // Construct paths with Franko filenames (all lowercase)
-    const audioPath = 'al7an/' + audioFile;
-    const imagePath = 'al7an/' + imageFile;
+    // Store images and reset index
+    currentHymnImages = images;
+    currentImageIndex = 0;
     
+    // Construct audio path with Franko filename
+    const audioPath = 'al7an/' + audioFile;
     console.log('Audio path:', audioPath);
-    console.log('Image path:', imagePath);
     
     // Load audio with explicit MIME type
     audioPlayer.src = audioPath;
     audioPlayer.type = 'audio/ogg';
     currentAudio = audioPath;
     
-    // Load image with error handling
-    const hymnImage = document.getElementById('hymnImage');
-    hymnImage.src = imagePath;
-    hymnImage.style.display = 'block';
+    // Load first image
+    loadCurrentImage();
     
-    // Add error handling for image
-    hymnImage.onerror = function() {
-        console.log('Image failed to load, trying alternative...');
-        // Try different extensions or show placeholder
-        this.onerror = function() {
-            console.log('Alternative failed, showing placeholder...');
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjlGQUZCIi8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWODBIODBWNjBaIiBmaWxsPSIjODdDRUVCIi8+CjxwYXRoIGQ9Ik04MCA5MEgxMjBWMTIwSDgwVjkwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8cGF0aCBkPSJNODAgMTIwSDEyMFYxNDBIODBWMTIwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8L3N2Zz4K';
-        };
-        // Try .png extension
-        this.src = 'al7an/' + imageFile.replace('.jpg', '.png');
-    };
+    // Update navigation UI
+    updateImageNavigation();
     
     hymnModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -382,6 +387,63 @@ function openHymnModal(title, audioFile, imageFile) {
     isPlaying = false;
     updatePlayButton();
     audioPlayer.load();
+}
+
+// Load current image in slider
+function loadCurrentImage() {
+    const hymnImage = document.getElementById('hymnImage');
+    const imagePath = 'al7an/' + currentHymnImages[currentImageIndex];
+    
+    console.log('Loading image:', imagePath);
+    hymnImage.src = imagePath;
+    hymnImage.style.display = 'block';
+    
+    // Add error handling
+    hymnImage.onerror = function() {
+        console.log('Image failed to load, trying alternative...');
+        this.onerror = function() {
+            console.log('Alternative failed, showing placeholder...');
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjlGQUZCIi8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWODBIODBWNjBaIiBmaWxsPSIjODdDRUVCIi8+CjxwYXRoIGQ9Ik04MCA5MEgxMjBWMTIwSDgwVjkwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8cGF0aCBkPSJNODAgMTIwSDEyMFYxNDBIODBWMTIwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8L3N2Zz4K';
+        };
+        // Try .png extension
+        this.src = 'al7an/' + currentHymnImages[currentImageIndex].replace('.jpg', '.png');
+    };
+}
+
+// Update image navigation UI
+function updateImageNavigation() {
+    const prevBtn = document.getElementById('prevImageBtn');
+    const nextBtn = document.getElementById('nextImageBtn');
+    const pageIndicator = document.getElementById('imagePageIndicator');
+    
+    if (currentHymnImages.length > 1) {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+        pageIndicator.textContent = `صفحة ${currentImageIndex + 1} من ${currentHymnImages.length}`;
+        pageIndicator.style.display = 'block';
+    } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        pageIndicator.style.display = 'none';
+    }
+}
+
+// Navigate to previous image
+function previousImage() {
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+        loadCurrentImage();
+        updateImageNavigation();
+    }
+}
+
+// Navigate to next image
+function nextImage() {
+    if (currentImageIndex < currentHymnImages.length - 1) {
+        currentImageIndex++;
+        loadCurrentImage();
+        updateImageNavigation();
+    }
 }
 
 // Close hymn modal

@@ -583,7 +583,20 @@
             <div class="hymn-container">
                 <!-- Image Display -->
                 <div class="hymn-image-container">
-                    <img id="hymnImage" class="hymn-image" alt="النوتة الموسيقية">
+                    <img id="hymnImage" class="hymn-image" alt="Hymn Image">
+                    
+                    <!-- Image Navigation Arrows -->
+                    <button id="prevImageBtn" onclick="previousImage()" class="absolute left-4 top-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-all" style="display: none;">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button id="nextImageBtn" onclick="nextImage()" class="absolute right-4 top-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-all" style="display: none;">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <!-- Page Indicator -->
+                    <div id="imagePageIndicator" class="absolute bottom-4 left-1/2 right-1/2 bg-black bg-opacity-75 text-white text-sm px-3 py-1 rounded-full text-center" style="display: none;">
+                        صفحة 1 من 1
+                    </div>
                 </div>
                 
                 <!-- Audio Player -->
