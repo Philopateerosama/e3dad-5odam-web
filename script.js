@@ -6,40 +6,101 @@ const CONFIG = {
     supportedImageFormats: ['.jpg', '.jpeg', '.png']
 };
 
-// Data structure mapping numbers to Arabic titles
-const LECTURES_DATA = {
-    1: 'الصوم - لاهوت مقارن',
-    2: 'العصر الرسولي - عصر الإستشهاد',
-    3: 'المعمودية - لاهوت مقارن',
-    4: 'المنهج إعداد خدام - سنة أولى 2026',
-    5: 'تعريف الكتاب المقدس',
-    6: 'حساب الأبقطي',
-    7: 'خيمة الاجتماع',
-    8: 'سر التجسد الإلهى ل 2026',
-    9: 'سر التوبة والاعتراف - لاهوت مقارن-1',
-    10: 'طبيعة السيد المسيح',
-    11: 'عقيده الثالوث',
-    12: 'مجمع القسطنطينية 2026',
-    13: 'مجمع نيقية 2026',
-    14: 'مصداقية الكتاب المقدس',
-    15: 'مقدمة عامة فى الطقوس',
-    16: 'مهارات الكتاب المقدس 2026'
-};
+// Hardcoded data map for lectures
+const LECTURES_DATA = [
+    { id: 1, title: 'الصوم - لاهوت مقارن', path: 'Mo7drat/1.pdf' },
+    { id: 2, title: 'العصر الرسولي - عصر الإستشهاد', path: 'Mo7drat/2.pdf' },
+    { id: 3, title: 'المعمودية - لاهوت مقارن', path: 'Mo7drat/3.pdf' },
+    { id: 4, title: 'المنهج إعداد خدام - سنة أولى 2026', path: 'Mo7drat/4.pdf' },
+    { id: 5, title: 'تعريف الكتاب المقدس', path: 'Mo7drat/5.pdf' },
+    { id: 6, title: 'حساب الأبقطي', path: 'Mo7drat/6.pdf' },
+    { id: 7, title: 'خيمة الاجتماع', path: 'Mo7drat/7.pdf' },
+    { id: 8, title: 'سر التجسد الإلهى ل 2026', path: 'Mo7drat/8.pdf' },
+    { id: 9, title: 'سر التوبة والاعتراف - لاهوت مقارن-1', path: 'Mo7drat/9.pdf' },
+    { id: 10, title: 'طبيعة السيد المسيح', path: 'Mo7drat/10.pdf' },
+    { id: 11, title: 'عقيده الثالوث', path: 'Mo7drat/11.pdf' },
+    { id: 12, title: 'مجمع القسطنطينية 2026', path: 'Mo7drat/12.pdf' },
+    { id: 13, title: 'مجمع نيقية 2026', path: 'Mo7drat/13.pdf' },
+    { id: 14, title: 'مصداقية الكتاب المقدس', path: 'Mo7drat/14.pdf' },
+    { id: 15, title: 'مقدمة عامة فى الطقوس', path: 'Mo7drat/15.pdf' },
+    { id: 16, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat/16.pdf' }
+];
 
-const HYMNS_DATA = {
-    1: 'تسبيحة 1',
-    2: 'أمين أمين طون ثاناطون',
-    3: 'ارباع الناقوس آدام',
-    4: 'ارباع الناقوس واطس',
-    5: 'الليلويا فاى بيبى (1)',
-    6: 'الليلويا فاى بيبى (2)',
-    7: 'الهيتنات السنوى',
-    8: 'تى شورى',
-    9: 'ذوكصولوجية السيدة العذراء رفع بخور باكر',
-    10: 'مرد أنجيل عيد الميلاد',
-    11: 'مرد انجيل الاحد الاول والثانى',
-    12: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك'
-};
+// Hardcoded data map for hymns (using Arabic filenames since they weren't renamed)
+const HYMNS_DATA = [
+    { 
+        id: 1, 
+        title: 'تسبيحة 1', 
+        audioPath: 'al7an/1.mp3', 
+        imagePath: 'al7an/1.jpg' 
+    },
+    { 
+        id: 2, 
+        title: 'أمين أمين طون ثاناطون', 
+        audioPath: 'al7an/أمين أمين طون ثاناطون.ogg', 
+        imagePath: 'al7an/أمين أمين طون ثاناطون.jpg' 
+    },
+    { 
+        id: 3, 
+        title: 'ارباع الناقوس آدام', 
+        audioPath: 'al7an/ارباع الناقوس آدام.ogg', 
+        imagePath: 'al7an/ارباع الناقوس آدام.jpg' 
+    },
+    { 
+        id: 4, 
+        title: 'ارباع الناقوس واطس', 
+        audioPath: 'al7an/ارباع الناقوس واطس.ogg', 
+        imagePath: 'al7an/ارباع الناقوس واطس.jpg' 
+    },
+    { 
+        id: 5, 
+        title: 'الليلويا فاى بيبى (1)', 
+        audioPath: 'al7an/الليلويا فاى بيبى (1).ogg', 
+        imagePath: 'al7an/الليلويا فاى بيبى.jpg' 
+    },
+    { 
+        id: 6, 
+        title: 'الليلويا فاى بيبى (2)', 
+        audioPath: 'al7an/الليلويا فاى بيبى (2).ogg', 
+        imagePath: 'al7an/الليلويا فاى بيبى.jpg' 
+    },
+    { 
+        id: 7, 
+        title: 'الهيتنات السنوى', 
+        audioPath: 'al7an/الهيتنات السنوى.ogg', 
+        imagePath: 'al7an/الهيتنات السنوى1.jpg' 
+    },
+    { 
+        id: 8, 
+        title: 'تى شورى', 
+        audioPath: 'al7an/تى شورى.ogg', 
+        imagePath: 'al7an/تى شورى.jpg' 
+    },
+    { 
+        id: 9, 
+        title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر', 
+        audioPath: 'al7an/ذوكصولوجية السيدة العذراء رفع بخور باكر.ogg', 
+        imagePath: 'al7an/ذوكصولوجية السيدة العذراء رفع بخور باكر1.jpg' 
+    },
+    { 
+        id: 10, 
+        title: 'مرد أنجيل عيد الميلاد', 
+        audioPath: 'al7an/مرد أنجيل عيد الميلاد.ogg', 
+        imagePath: 'al7an/مرد أنجيل عيد الميلاد.jpg' 
+    },
+    { 
+        id: 11, 
+        title: 'مرد انجيل الاحد الاول والثانى', 
+        audioPath: 'al7an/مرد انجيل الاحد الاول والثانى.ogg', 
+        imagePath: 'al7an/مرد انجيل الاحد الاول والثانى.jpg' 
+    },
+    { 
+        id: 12, 
+        title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك', 
+        audioPath: 'al7an/مرد انجيل الاحد الثالث والرابع لشهر كيهك.ogg', 
+        imagePath: 'al7an/مرد انجيل الاحد الثالث والرابع لشهر كيهك.jpg' 
+    }
+];
 
 // Data storage
 let lectures = [];
@@ -70,14 +131,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load lectures data
 async function loadLectures() {
     try {
-        // Create lecture objects from data structure
-        lectures = Object.keys(LECTURES_DATA).map(number => ({
-            id: parseInt(number),
-            name: LECTURES_DATA[number],
-            filename: `${number}.pdf`,
-            path: CONFIG.lecturesPath + `${number}.pdf`
+        // Use hardcoded data map
+        lectures = LECTURES_DATA.map(lecture => ({
+            id: lecture.id,
+            name: lecture.title,
+            filename: lecture.path.split('/').pop(),
+            path: lecture.path
         }));
 
+        console.log('Loaded lectures:', lectures);
         displayLectures();
     } catch (error) {
         console.error('Error loading lectures:', error);
@@ -87,14 +149,15 @@ async function loadLectures() {
 // Load hymns data
 async function loadHymns() {
     try {
-        // Create hymn objects from data structure
-        hymns = Object.keys(HYMNS_DATA).map(number => ({
-            id: parseInt(number),
-            name: HYMNS_DATA[number],
-            audioPath: CONFIG.hymnsPath + `${number}.ogg`,
-            imagePath: CONFIG.hymnsPath + `${number}.jpg`
+        // Use hardcoded data map
+        hymns = HYMNS_DATA.map(hymn => ({
+            id: hymn.id,
+            name: hymn.title,
+            audioPath: hymn.audioPath,
+            imagePath: hymn.imagePath
         }));
 
+        console.log('Loaded hymns:', hymns);
         displayHymns();
     } catch (error) {
         console.error('Error loading hymns:', error);
@@ -242,9 +305,11 @@ function switchSection(section) {
 
 // Open PDF modal
 function openPdfModal(title, path) {
+    console.log('Attempting to open PDF:', path);
     document.getElementById('pdfTitle').textContent = title;
     // Encode the path to handle Arabic characters properly
     const encodedPath = encodeURI(path);
+    console.log('Encoded PDF path:', encodedPath);
     document.getElementById('pdfViewer').src = encodedPath;
     
     // Set up fallback link
@@ -279,10 +344,12 @@ function closePdfModal() {
 
 // Open hymn modal
 function openHymnModal(title, audioPath, imagePath) {
+    console.log('Attempting to open hymn:', { title, audioPath, imagePath });
     document.getElementById('hymnTitle').textContent = title;
     
     // Load audio with proper encoding
     const encodedAudioPath = encodeURI(audioPath);
+    console.log('Encoded audio path:', encodedAudioPath);
     audioPlayer.src = encodedAudioPath;
     currentAudio = encodedAudioPath;
     
@@ -290,6 +357,7 @@ function openHymnModal(title, audioPath, imagePath) {
     const hymnImage = document.getElementById('hymnImage');
     if (imagePath) {
         const encodedImagePath = encodeURI(imagePath);
+        console.log('Encoded image path:', encodedImagePath);
         hymnImage.src = encodedImagePath;
         hymnImage.style.display = 'block';
     } else {
