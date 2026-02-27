@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعداد خدام - كنيسة العذراء مريم بالزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        /* Mobile-first base styles */
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 50%, #FFD700 100%);
+        }
+        
+        .gold-accent {
+            color: #FFD700;
+        }
+        
+        .light-blue-accent {
+            color: #87CEEB;
+        }
+        
+        .mary-blue {
+            background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Touch-friendly buttons and interactions */
+        .touch-target {
+            min-height: 48px;
+            min-width: 48px;
+            padding: 12px;
+        }
+        
+        .mobile-card {
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .mobile-card:active {
+            transform: scale(0.98);
+            background: #f8f9fa;
+        }
+        
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            z-index: 50;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-item:active {
+            background: #f3f4f6;
+        }
+        
+        .nav-item.active {
+            color: #87CEEB;
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Mobile search */
+        .mobile-search {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid #e5e7eb;
+            border-radius: 24px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #87CEEB;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 18px;
+        }
+        
+        /* Content areas with bottom padding for nav */
+        .content-area {
+            padding-bottom: 80px;
+            min-height: 100vh;
+        }
+        
+        /* Lecture cards - mobile optimized */
+        .lecture-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #f3f4f6;
+        }
+        
+        .lecture-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lecture-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .lecture-meta {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        /* Hymn cards - mobile optimized */
+        .hymn-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #f3f4f6;
+        }
+        
+        .hymn-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile modal styles */
+        .mobile-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            background: white;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            min-height: 60px;
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: #f3f4f6;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #6b7280;
+        }
+        
+        .modal-close:active {
+            background: #e5e7eb;
+        }
+        
+        .modal-content {
+            flex: 1;
+            padding: 16px;
+            overflow: auto;
+        }
+        
+        /* PDF viewer mobile */
+        .pdf-container {
+            width: 100%;
+            height: calc(100vh - 120px);
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Hymn viewer mobile - stacked layout */
+        .hymn-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+            gap: 16px;
+        }
+        
+        .hymn-image-container {
+            flex: 1;
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+        
+        .hymn-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hymn-audio-container {
+            background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .audio-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .play-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            background: white;
+            color: #87CEEB;
+            border: 2px solid #FFD700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .progress-container {
+            flex: 1;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: width 0.1s ease;
+        }
+        
+        .time-display {
+            font-size: 12px;
+            min-width: 70px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        /* Stats section mobile */
+        .stats-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fffbeb 100%);
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .stats-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #87CEEB;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Desktop overrides (secondary) */
+        @media (min-width: 768px) {
+            .bottom-nav {
+                display: none;
+            }
+            
+            .content-area {
+                padding-bottom: 0;
+            }
+            
+            .mobile-search {
+                position: relative;
+                top: auto;
+                z-index: auto;
+            }
+            
+            .hymn-container {
+                flex-direction: row;
+                height: auto;
+                max-height: calc(100vh - 200px);
+            }
+            
+            .hymn-image-container {
+                flex: 1;
+            }
+            
+            .hymn-audio-container {
+                flex: 0 0 400px;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #87CEEB;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B0E0E6;
+        }
+        
+        /* Search highlight */
+        .search-highlight {
+            background-color: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        /* Hide desktop sidebar on mobile */
+        .desktop-sidebar {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .desktop-sidebar {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-center md:justify-between">
+                <div class="flex items-center space-x-reverse space-x-3">
+                    <img src="logo.png" alt="كنيسة العذراء مريم" class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-lg">
+                    <div class="text-center md:text-right">
+                        <h1 class="text-lg md:text-xl font-bold">إعداد خدام</h1>
+                        <p class="text-xs md:text-sm opacity-90">كنيسة العذراء مريم بالزيتون</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Search -->
+    <div class="mobile-search">
+        <div class="relative">
+            <input type="text" id="searchInput" placeholder="بحث في المحاضرات والألحان..." class="search-input">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-area">
+        <!-- Stats Section -->
+        <div class="stats-container">
+            <h3 class="stats-title">إحصائيات المحتوى</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value lectures-total">0</div>
+                    <div class="stat-label">محاضرة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value hymns-total">0</div>
+                    <div class="stat-label">لحن</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lectures Section -->
+        <section id="lecturesSection" class="content-section px-4">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">المحاضرات</h2>
+                <p class="text-sm text-gray-600">اضغط على أي محاضرة لعرضها</p>
+            </div>
+            
+            <div id="lecturesList" class="space-y-3">
+                <!-- Lectures will be loaded here as mobile cards -->
+            </div>
+        </section>
+
+        <!-- Hymns Section -->
+        <section id="hymnsSection" class="content-section px-4 hidden">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">الألحان</h2>
+                <p class="text-sm text-gray-600">اختر لحناً للاستماع والمشاهدة</p>
+            </div>
+            
+            <div id="hymnsList" class="space-y-3">
+                <!-- Hymns will be loaded here as mobile cards -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="flex">
+            <button class="nav-item active" data-section="lectures">
+                <i class="fas fa-book"></i>
+                <span>المحاضرات</span>
+            </button>
+            <button class="nav-item" data-section="hymns">
+                <i class="fas fa-music"></i>
+                <span>الألحان</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PDF Modal -->
+    <div id="pdfModal" class="mobile-modal hidden">
+        <div class="modal-header">
+            <h3 id="pdfTitle" class="text-lg font-semibold text-gray-800 flex-1"></h3>
+            <button onclick="closePdfModal()" class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="pdf-container">
+                <iframe id="pdfViewer" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hymn Modal -->
+    <div id="hymnModal" class="mobile-modal hidden">
+        <div class="modal-header">
+            <h3 id="hymnTitle" class="text-lg font-semibold text-gray-800 flex-1"></h3>
+            <button onclick="closeHymnModal()" class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="hymn-container">
+                <!-- Image Display -->
+                <div class="hymn-image-container">
+                    <img id="hymnImage" class="hymn-image" alt="النوتة الموسيقية">
+                </div>
+                
+                <!-- Audio Player -->
+                <div class="hymn-audio-container">
+                    <h4 class="audio-title">المشغل الصوتي</h4>
+                    <audio id="audioPlayer" class="hidden"></audio>
+                    <div class="audio-controls">
+                        <button id="playBtn" class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+                        <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm md:text-base font-medium">
+                <i class="fas fa-church ml-2 gold-accent"></i>
+                إعداد خدام العذراء الزيتون - جميع الحقوق محفوظة
+            </p>
+            <p class="text-xs md:text-sm opacity-75 mt-2">
+                كنيسة العذراء مريم بالزيتون
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
