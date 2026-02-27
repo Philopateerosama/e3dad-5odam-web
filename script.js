@@ -26,76 +26,70 @@ const LECTURES_DATA = [
     { id: 16, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat/16.pdf' }
 ];
 
-// Hardcoded data map for hymns (using Arabic filenames since they weren't renamed)
+// Hardcoded data map for hymns (using actual existing files)
 const HYMNS_DATA = [
     { 
         id: 1, 
-        title: 'تسبيحة 1', 
-        audioPath: 'al7an/1.mp3', 
-        imagePath: 'al7an/1.jpg' 
-    },
-    { 
-        id: 2, 
         title: 'أمين أمين طون ثاناطون', 
         audioPath: 'al7an/أمين أمين طون ثاناطون.ogg', 
         imagePath: 'al7an/أمين أمين طون ثاناطون.jpg' 
     },
     { 
-        id: 3, 
+        id: 2, 
         title: 'ارباع الناقوس آدام', 
         audioPath: 'al7an/ارباع الناقوس آدام.ogg', 
         imagePath: 'al7an/ارباع الناقوس آدام.jpg' 
     },
     { 
-        id: 4, 
+        id: 3, 
         title: 'ارباع الناقوس واطس', 
         audioPath: 'al7an/ارباع الناقوس واطس.ogg', 
         imagePath: 'al7an/ارباع الناقوس واطس.jpg' 
     },
     { 
-        id: 5, 
+        id: 4, 
         title: 'الليلويا فاى بيبى (1)', 
         audioPath: 'al7an/الليلويا فاى بيبى (1).ogg', 
         imagePath: 'al7an/الليلويا فاى بيبى.jpg' 
     },
     { 
-        id: 6, 
+        id: 5, 
         title: 'الليلويا فاى بيبى (2)', 
         audioPath: 'al7an/الليلويا فاى بيبى (2).ogg', 
         imagePath: 'al7an/الليلويا فاى بيبى.jpg' 
     },
     { 
-        id: 7, 
+        id: 6, 
         title: 'الهيتنات السنوى', 
         audioPath: 'al7an/الهيتنات السنوى.ogg', 
         imagePath: 'al7an/الهيتنات السنوى1.jpg' 
     },
     { 
-        id: 8, 
+        id: 7, 
         title: 'تى شورى', 
         audioPath: 'al7an/تى شورى.ogg', 
         imagePath: 'al7an/تى شورى.jpg' 
     },
     { 
-        id: 9, 
+        id: 8, 
         title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر', 
         audioPath: 'al7an/ذوكصولوجية السيدة العذراء رفع بخور باكر.ogg', 
         imagePath: 'al7an/ذوكصولوجية السيدة العذراء رفع بخور باكر1.jpg' 
     },
     { 
-        id: 10, 
+        id: 9, 
         title: 'مرد أنجيل عيد الميلاد', 
         audioPath: 'al7an/مرد أنجيل عيد الميلاد.ogg', 
         imagePath: 'al7an/مرد أنجيل عيد الميلاد.jpg' 
     },
     { 
-        id: 11, 
+        id: 10, 
         title: 'مرد انجيل الاحد الاول والثانى', 
         audioPath: 'al7an/مرد انجيل الاحد الاول والثانى.ogg', 
         imagePath: 'al7an/مرد انجيل الاحد الاول والثانى.jpg' 
     },
     { 
-        id: 12, 
+        id: 11, 
         title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك', 
         audioPath: 'al7an/مرد انجيل الاحد الثالث والرابع لشهر كيهك.ogg', 
         imagePath: 'al7an/مرد انجيل الاحد الثالث والرابع لشهر كيهك.jpg' 
