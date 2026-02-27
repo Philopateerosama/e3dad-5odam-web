@@ -23,10 +23,6 @@ const playBtn = document.getElementById('playBtn');
 const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const timeDisplay = document.getElementById('timeDisplay');
-const openPdfNewTabBtn = document.getElementById('openPdfNewTab');
-
-// Global variable to store current PDF path
-let currentPdfPath = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -185,16 +181,6 @@ function setupEventListeners() {
         }
     });
 
-    // Open PDF in new tab button
-    if (openPdfNewTabBtn) {
-        openPdfNewTabBtn.addEventListener('click', function() {
-            if (currentPdfPath) {
-                const encodedPath = encodeURIComponent(currentPdfPath);
-                window.open(encodedPath, '_blank');
-            }
-        });
-    }
-
     // Audio player controls
     playBtn.addEventListener('click', togglePlayPause);
     progressBar.addEventListener('click', seekAudio);
@@ -252,24 +238,14 @@ function switchSection(section) {
 // Open PDF modal
 function openPdfModal(title, path) {
     document.getElementById('pdfTitle').textContent = title;
+    // Encode the path to handle Arabic characters properly
+    const encodedPath = encodeURI(path);
+    document.getElementById('pdfViewer').src = encodedPath;
     
-    // Store current PDF path for new tab functionality
-    currentPdfPath = path;
-    
-    // Encode the PDF path for proper Arabic character handling
-    const encodedPath = encodeURIComponent(path);
-    
-    // Try direct PDF viewer first
-    const pdfViewer = document.getElementById('pdfViewer');
-    
-    // Check if mobile and use Google Drive Viewer as fallback
-    if (window.innerWidth < 768) {
-        // Use Google Drive Viewer for better mobile compatibility
-        pdfViewer.src = `https://docs.google.com/viewer?url=${encodedPath}&embedded=true`;
-    } else {
-        // Use direct path for desktop
-        pdfViewer.src = encodedPath;
-    }
+    // Set up fallback link
+    const pdfLink = document.getElementById('pdfLink');
+    const pdfFallback = document.getElementById('pdfFallback');
+    pdfLink.href = encodedPath;
     
     pdfModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -278,12 +254,21 @@ function openPdfModal(title, path) {
     if (window.innerWidth < 768) {
         pdfModal.style.height = window.innerHeight + 'px';
     }
+    
+    // Show fallback after a delay if PDF doesn't load
+    setTimeout(() => {
+        const iframe = document.getElementById('pdfViewer');
+        if (!iframe.contentDocument && !iframe.contentWindow) {
+            pdfFallback.classList.remove('hidden');
+        }
+    }, 3000);
 }
 
 // Close PDF modal
 function closePdfModal() {
     pdfModal.classList.add('hidden');
     document.getElementById('pdfViewer').src = '';
+    document.getElementById('pdfFallback').classList.add('hidden');
     document.body.style.overflow = 'auto';
 }
 
@@ -291,14 +276,16 @@ function closePdfModal() {
 function openHymnModal(title, audioPath, imagePath) {
     document.getElementById('hymnTitle').textContent = title;
     
-    // Load audio
-    audioPlayer.src = audioPath;
-    currentAudio = audioPath;
+    // Load audio with proper encoding
+    const encodedAudioPath = encodeURI(audioPath);
+    audioPlayer.src = encodedAudioPath;
+    currentAudio = encodedAudioPath;
     
-    // Load image
+    // Load image with proper encoding
     const hymnImage = document.getElementById('hymnImage');
     if (imagePath) {
-        hymnImage.src = imagePath;
+        const encodedImagePath = encodeURI(imagePath);
+        hymnImage.src = encodedImagePath;
         hymnImage.style.display = 'block';
     } else {
         hymnImage.style.display = 'none';
