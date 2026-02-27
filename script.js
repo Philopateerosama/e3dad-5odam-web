@@ -6,6 +6,41 @@ const CONFIG = {
     supportedImageFormats: ['.jpg', '.jpeg', '.png']
 };
 
+// Data structure mapping numbers to Arabic titles
+const LECTURES_DATA = {
+    1: 'الصوم - لاهوت مقارن',
+    2: 'العصر الرسولي - عصر الإستشهاد',
+    3: 'المعمودية - لاهوت مقارن',
+    4: 'المنهج إعداد خدام - سنة أولى 2026',
+    5: 'تعريف الكتاب المقدس',
+    6: 'حساب الأبقطي',
+    7: 'خيمة الاجتماع',
+    8: 'سر التجسد الإلهى ل 2026',
+    9: 'سر التوبة والاعتراف - لاهوت مقارن-1',
+    10: 'طبيعة السيد المسيح',
+    11: 'عقيده الثالوث',
+    12: 'مجمع القسطنطينية 2026',
+    13: 'مجمع نيقية 2026',
+    14: 'مصداقية الكتاب المقدس',
+    15: 'مقدمة عامة فى الطقوس',
+    16: 'مهارات الكتاب المقدس 2026'
+};
+
+const HYMNS_DATA = {
+    1: 'تسبيحة 1',
+    2: 'أمين أمين طون ثاناطون',
+    3: 'ارباع الناقوس آدام',
+    4: 'ارباع الناقوس واطس',
+    5: 'الليلويا فاى بيبى (1)',
+    6: 'الليلويا فاى بيبى (2)',
+    7: 'الهيتنات السنوى',
+    8: 'تى شورى',
+    9: 'ذوكصولوجية السيدة العذراء رفع بخور باكر',
+    10: 'مرد أنجيل عيد الميلاد',
+    11: 'مرد انجيل الاحد الاول والثانى',
+    12: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك'
+};
+
 // Data storage
 let lectures = [];
 let hymns = [];
@@ -35,29 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load lectures data
 async function loadLectures() {
     try {
-        const lectureFiles = [
-            'الصوم - لاهوت مقارن.pdf',
-            'العصر الرسولي - عصر الإستشهاد.pdf',
-            'المعمودية - لاهوت مقارن.pdf',
-            'المنهج إعداد خدام - سنة أولى 2026.pdf',
-            'تعريف الكتاب المقدس.pdf',
-            'حساب الأبقطي.pdf',
-            'خيمة الاجتماع.pdf',
-            'سر التجسد الإلهى ل 2026.pdf',
-            'سر التوبة والاعتراف - لاهوت مقارن-1.pdf',
-            'طبيعة السيد المسيح.pdf',
-            'عقيده الثالوث.pdf',
-            'مجمع القسطنطينية 2026.pdf',
-            'مجمع نيقية 2026.pdf',
-            'مصداقية الكتاب المقدس.pdf',
-            'مقدمة عامة فى الطقوس.pdf',
-            'مهارات الكتاب المقدس 2026.pdf'
-        ];
-
-        lectures = lectureFiles.map(filename => ({
-            name: filename.replace('.pdf', ''),
-            filename: filename,
-            path: CONFIG.lecturesPath + filename
+        // Create lecture objects from data structure
+        lectures = Object.keys(LECTURES_DATA).map(number => ({
+            id: parseInt(number),
+            name: LECTURES_DATA[number],
+            filename: `${number}.pdf`,
+            path: CONFIG.lecturesPath + `${number}.pdf`
         }));
 
         displayLectures();
@@ -69,25 +87,12 @@ async function loadLectures() {
 // Load hymns data
 async function loadHymns() {
     try {
-        const hymnFiles = [
-            { name: 'أمين أمين طون ثاناطون', audio: 'أمين أمين طون ثاناطون.ogg', image: null },
-            { name: 'ارباع الناقوس آدام', audio: 'ارباع الناقوس آدام.ogg', image: null },
-            { name: 'ارباع الناقوس واطس', audio: 'ارباع الناقوس واطس.ogg', image: null },
-            { name: 'الليلويا فاى بيبى (1)', audio: 'الليلويا فاى بيبى (1).ogg', image: null },
-            { name: 'الليلويا فاى بيبى (2)', audio: 'الليلويا فاى بيبى (2).ogg', image: null },
-            { name: 'الهيتنات السنوى', audio: 'الهيتنات السنوى.ogg', image: null },
-            { name: 'تى شورى', audio: 'تى شورى.ogg', image: null },
-            { name: 'ذوكصولوجية السيدة العذراء رفع بخور باكر', audio: 'ذوكصولوجية السيدة العذراء رفع بخور باكر.ogg', image: null },
-            { name: 'مرد أنجيل عيد الميلاد', audio: 'مرد أنجيل عيد الميلاد.ogg', image: null },
-            { name: 'مرد انجيل الاحد الاول والثانى', audio: 'مرد انجيل الاحد الاول والثانى.ogg', image: null },
-            { name: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك', audio: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك.ogg', image: null },
-            { name: 'تسبيحة 1', audio: '1.mp3', image: '1.jpg' }
-        ];
-
-        hymns = hymnFiles.map(hymn => ({
-            name: hymn.name,
-            audioPath: CONFIG.hymnsPath + hymn.audio,
-            imagePath: hymn.image ? CONFIG.hymnsPath + hymn.image : null
+        // Create hymn objects from data structure
+        hymns = Object.keys(HYMNS_DATA).map(number => ({
+            id: parseInt(number),
+            name: HYMNS_DATA[number],
+            audioPath: CONFIG.hymnsPath + `${number}.ogg`,
+            imagePath: CONFIG.hymnsPath + `${number}.jpg`
         }));
 
         displayHymns();
