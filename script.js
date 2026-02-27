@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadLectures();
     loadHymns();
     setupEventListeners();
+    updateStats();
 });
 
 // Load lectures data
@@ -352,5 +353,13 @@ function updateDuration() {
 
 // Update counts
 function updateCounts() {
-    // Stats section removed - counts no longer displayed
+    // Counts are now displayed in the stats section
+    document.querySelector('.lectures-total').textContent = lectures.length;
+    document.querySelector('.hymns-total').textContent = hymns.length;
+}
+
+// Update stats
+function updateStats() {
+    document.querySelector('.lectures-total').textContent = lectures.length;
+    document.querySelector('.hymns-total').textContent = hymns.length;
 }
