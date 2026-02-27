@@ -26,19 +26,74 @@ const LECTURES_DATA = [
     { id: 16, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat/16.pdf' }
 ];
 
-// Hardcoded data map for hymns (using dynamic path construction)
+// Hardcoded data map for hymns (Franko filenames with Arabic titles)
 const HYMNS_DATA = [
-    { id: 1, title: 'أمين أمين طون ثاناطون' },
-    { id: 2, title: 'ارباع الناقوس آدام' },
-    { id: 3, title: 'ارباع الناقوس واطس' },
-    { id: 4, title: 'الليلويا فاى بيبى (1)' },
-    { id: 5, title: 'الليلويا فاى بيبى (2)' },
-    { id: 6, title: 'الهيتنات السنوى' },
-    { id: 7, title: 'تى شورى' },
-    { id: 8, title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر' },
-    { id: 9, title: 'مرد أنجيل عيد الميلاد' },
-    { id: 10, title: 'مرد انجيل الاحد الاول والثانى' },
-    { id: 11, title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك' }
+    { 
+        id: 1, 
+        title: 'أمين أمين طون ثاناطون',
+        audioFile: 'amen amen.ogg',
+        imageFile: 'amen amen.jpg'
+    },
+    { 
+        id: 2, 
+        title: 'ارباع الناقوس آدام',
+        audioFile: 'arba3 el na2os adam.ogg',
+        imageFile: 'arba3 el na2os adam.jpg'
+    },
+    { 
+        id: 3, 
+        title: 'ارباع الناقوس واطس',
+        audioFile: 'arba3 el na2os watos.ogg',
+        imageFile: 'arba3 el na2os watos.jpg'
+    },
+    { 
+        id: 4, 
+        title: 'الليلويا فاى بيبى (1)',
+        audioFile: 'aleloya.ogg',
+        imageFile: 'aleloya.jpg'
+    },
+    { 
+        id: 5, 
+        title: 'الليلويا فاى بيبى (2)',
+        audioFile: 'aleloya.ogg',
+        imageFile: 'aleloya.jpg'
+    },
+    { 
+        id: 6, 
+        title: 'الهيتنات السنوى',
+        audioFile: 'el hetnyat el snawya.ogg',
+        imageFile: 'el hetnyat el snawya 1.jpg'
+    },
+    { 
+        id: 7, 
+        title: 'تى شورى',
+        audioFile: 'te shory.ogg',
+        imageFile: 'te shory.jpg'
+    },
+    { 
+        id: 8, 
+        title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر',
+        audioFile: 'zocsologya.ogg',
+        imageFile: 'zocsologya 1.jpg'
+    },
+    { 
+        id: 9, 
+        title: 'مرد أنجيل عيد الميلاد',
+        audioFile: '3ed el melad.ogg',
+        imageFile: '3ed el melad.jpg'
+    },
+    { 
+        id: 10, 
+        title: 'مرد انجيل الاحد الاول والثانى',
+        audioFile: 'mard engeal awle 7aden.ogg',
+        imageFile: 'mard engeal awel 7aden.jpg'
+    },
+    { 
+        id: 11, 
+        title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك',
+        audioFile: 'mard engeal tane 7adean.ogg',
+        imageFile: 'mard engeal tane 7adean.jpg'
+    }
 ];
 
 // Data storage
@@ -88,12 +143,12 @@ async function loadLectures() {
 // Load hymns data
 async function loadHymns() {
     try {
-        // Use hardcoded data map with dynamic path construction
+        // Use Franko filenames with Arabic titles
         hymns = HYMNS_DATA.map(hymn => ({
             id: hymn.id,
             name: hymn.title,
-            audioPath: null, // Will be constructed dynamically
-            imagePath: null  // Will be constructed dynamically
+            audioFile: hymn.audioFile,
+            imageFile: hymn.imageFile
         }));
 
         console.log('Loaded hymns:', hymns);
@@ -139,7 +194,7 @@ function displayHymns(searchTerm = '') {
     );
 
     hymnsList.innerHTML = filteredHymns.map(hymn => `
-        <div class="hymn-card" onclick="openHymnModal('${hymn.name}', null, null)">
+        <div class="hymn-card" onclick="openHymnModal('${hymn.name}', '${hymn.audioFile}', '${hymn.imageFile}')">
             <div class="flex items-center space-x-reverse space-x-3">
                 <div class="mary-blue p-3 rounded-full">
                     <i class="fas fa-music light-blue-accent text-lg"></i>
@@ -282,38 +337,37 @@ function closePdfModal() {
 }
 
 // Open hymn modal
-function openHymnModal(title, audioPath, imagePath) {
-    console.log('Attempting to open hymn:', { title, audioPath, imagePath });
+function openHymnModal(title, audioFile, imageFile) {
+    console.log('Attempting to open hymn:', { title, audioFile, imageFile });
     document.getElementById('hymnTitle').textContent = title;
     
-    // Dynamic path construction with proper encoding
-    const fileName = title;
-    const encodedAudioPath = 'ألحان/' + encodeURIComponent(fileName + '.ogg');
-    const encodedImagePath = 'ألحان/' + encodeURIComponent(fileName + '.jpg');
+    // Construct paths with Franko filenames (all lowercase)
+    const audioPath = 'al7an/' + audioFile;
+    const imagePath = 'al7an/' + imageFile;
     
-    console.log('Dynamic audio path:', encodedAudioPath);
-    console.log('Dynamic image path:', encodedImagePath);
+    console.log('Audio path:', audioPath);
+    console.log('Image path:', imagePath);
     
     // Load audio with explicit MIME type
-    audioPlayer.src = encodedAudioPath;
+    audioPlayer.src = audioPath;
     audioPlayer.type = 'audio/ogg';
-    currentAudio = encodedAudioPath;
+    currentAudio = audioPath;
     
     // Load image with error handling
     const hymnImage = document.getElementById('hymnImage');
-    hymnImage.src = encodedImagePath;
+    hymnImage.src = imagePath;
     hymnImage.style.display = 'block';
     
     // Add error handling for image
     hymnImage.onerror = function() {
-        console.log('Image failed to load, trying alternative encoding...');
-        // Try alternative encoding or show placeholder
+        console.log('Image failed to load, trying alternative...');
+        // Try different extensions or show placeholder
         this.onerror = function() {
-            console.log('Alternative encoding failed, showing placeholder...');
+            console.log('Alternative failed, showing placeholder...');
             this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjlGQUZCIi8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWODBIODBWNjBaIiBmaWxsPSIjODdDRUVCIi8+CjxwYXRoIGQ9Ik04MCA5MEgxMjBWMTIwSDgwVjkwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8cGF0aCBkPSJNODAgMTIwSDEyMFYxNDBIODBWMTIwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8L3N2Zz4K';
         };
-        // Try without special characters encoding
-        this.src = 'ألحان/' + fileName.replace(/[()]/g, '') + '.jpg';
+        // Try .png extension
+        this.src = 'al7an/' + imageFile.replace('.jpg', '.png');
     };
     
     hymnModal.classList.remove('hidden');
