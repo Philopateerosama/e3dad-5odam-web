@@ -60,50 +60,6 @@
             background: #f8f9fa;
         }
         
-        /* Bottom Navigation Bar */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            z-index: 50;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        
-        .nav-item {
-            flex: 1;
-            padding: 8px 4px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .nav-item:active {
-            background: #f3f4f6;
-        }
-        
-        .nav-item.active {
-            color: #87CEEB;
-            background: rgba(135, 206, 235, 0.1);
-        }
-        
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-        
-        .nav-item span {
-            font-size: 12px;
-            font-weight: 500;
-        }
         
         /* Mobile search */
         .mobile-search {
@@ -139,9 +95,9 @@
             font-size: 18px;
         }
         
-        /* Content areas with bottom padding for nav */
+        /* Content areas with no bottom padding (no bottom nav) */
         .content-area {
-            padding-bottom: calc(80px + env(safe-area-inset-bottom));
+            padding-bottom: 20px;
             min-height: 100vh;
         }
         
@@ -278,6 +234,7 @@
             align-items: center;
             justify-content: center;
             min-height: 200px;
+            position: relative;
         }
         
         .hymn-image {
@@ -286,6 +243,95 @@
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Modern Image Navigation Overlay Styles */
+        .image-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+        
+        .image-nav-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .image-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+        
+        .image-nav-prev {
+            right: 8px;
+        }
+        
+        .image-nav-next {
+            left: 8px;
+        }
+        
+        .image-nav-btn i {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+        
+        .image-nav-btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* Page Counter Overlay */
+        .image-page-counter {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 767px) {
+            .image-nav-btn {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .image-nav-btn i {
+                font-size: 18px;
+            }
+            
+            .image-nav-prev {
+                right: 4px;
+            }
+            
+            .image-nav-next {
+                left: 4px;
+            }
+            
+            .image-page-counter {
+                bottom: 4px;
+                font-size: 11px;
+                padding: 3px 10px;
+            }
         }
         
         .hymn-audio-container {
@@ -384,6 +430,48 @@
             border-radius: 8px;
             text-align: center;
             border: 1px solid rgba(135, 206, 235, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        /* Interactive stat card styles */
+        .stat-card {
+            cursor: pointer;
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            border-color: #87CEEB;
+        }
+        
+        .stat-card:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.active {
+            border-color: #FFD700;
+            border-width: 2px;
+            background: linear-gradient(135deg, #fffbeb 0%, #fff9e6 100%);
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+        }
+        
+        .stat-nav-icon {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            font-size: 12px;
+            color: #87CEEB;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-nav-icon {
+            opacity: 1;
+            transform: translateY(2px);
         }
         
         .stat-value {
@@ -427,6 +515,98 @@
             .hymn-audio-container {
                 flex: 0 0 400px;
             }
+            
+            /* Desktop navigation adjustments */
+            .image-nav-btn {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .image-nav-btn i {
+                font-size: 20px;
+            }
+            
+            .image-nav-prev {
+                right: 16px;
+            }
+            
+            .image-nav-next {
+                left: 16px;
+            }
+            
+            .image-page-counter {
+                bottom: 16px;
+                font-size: 14px;
+                padding: 6px 16px;
+            }
+        }
+        
+        /* Semester Selection Screen */
+        .semester-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 1rem;
+            margin-top: -8vh; /* Move content higher */
+        }
+        
+        .semester-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .semester-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .semester-card:hover::before {
+            left: 100%;
+        }
+        
+        .content-screen {
+            display: block;
+        }
+        
+        /* Coming Soon placeholder */
+        .coming-soon {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+        
+        .coming-soon i {
+            font-size: 4rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .coming-soon h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .coming-soon p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        /* Hide search on semester selection */
+        .semester-selection-active .mobile-search {
+            display: none;
         }
         
         /* Custom scrollbar */
@@ -494,59 +674,112 @@
 
     <!-- Main Content -->
     <main class="content-area">
-        <!-- Stats Section -->
-        <div class="stats-container">
-            <h3 class="stats-title">إحصائيات المحتوى</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value lectures-total">0</div>
-                    <div class="stat-label">محاضرة</div>
+        <!-- Semester Selection Screen -->
+        <div id="semesterSelection" class="semester-screen">
+            <!-- Church Logo and Title -->
+            <div class="text-center mb-6">
+                <div class="mb-4">
+                    <img src="logo.png" alt="كنيسة العذراء مريم" class="w-28 h-28 md:w-36 md:h-36 mx-auto rounded-full border-4 border-white shadow-2xl">
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value hymns-total">0</div>
-                    <div class="stat-label">لحن</div>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2 drop-shadow-lg">إعداد خدام</h1>
+                <p class="text-lg md:text-xl font-bold text-gray-800 drop-shadow-md">كنيسة العذراء مريم بالزيتون</p>
+            </div>
+            
+            <!-- Semester Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto px-4 mt-2">
+                <!-- Semester 1 Card -->
+                <div onclick="selectSemester(1)" class="semester-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-2 border-transparent hover:border-blue-200">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-book-open text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">الترم الأول</h2>
+                        <p class="text-gray-600 text-sm mb-4">المحاضرات والألحان الأساسية</p>
+                        <div class="flex justify-center space-x-reverse space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-file-pdf ml-1"></i> 16 محاضرة</span>
+                            <span><i class="fas fa-music ml-1"></i> 11 لحن</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Semester 2 Card -->
+                <div onclick="selectSemester(2)" class="semester-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-2 border-transparent hover:border-green-200">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">الترم الثاني</h2>
+                        <p class="text-gray-600 text-sm mb-4">المحاضرات والألحان الأساسية</p>
+                        <div class="flex justify-center space-x-reverse space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-file-pdf ml-1"></i> 1 محاضرة</span>
+                            <span><i class="fas fa-music ml-1"></i> 1 لحن</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Lectures Section -->
-        <section id="lecturesSection" class="content-section px-4">
-            <div class="mb-4">
-                <h2 class="text-xl font-bold text-gray-800 mb-2">المحاضرات</h2>
-                <p class="text-sm text-gray-600">اضغط على أي محاضرة لعرضها</p>
+        
+        <!-- Content Screen (Hidden by default) -->
+        <div id="contentScreen" class="content-screen hidden">
+            <!-- Back Button -->
+            <div class="mb-6 px-4">
+                <button onclick="backToHome()" class="flex items-center space-x-reverse space-x-2 bg-white text-gray-700 px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-200">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>العودة للرئيسية</span>
+                </button>
             </div>
             
-            <div id="lecturesList" class="space-y-3">
-                <!-- Lectures will be loaded here as mobile cards -->
+            <!-- Stats Section -->
+            <div class="stats-container">
+                <h3 class="stats-title" id="semesterTitle">إحصائيات المحتوى</h3>
+                <div class="stats-grid">
+                    <div id="lecturesCard" class="stat-item stat-card" onclick="navigateToSection('lectures')">
+                        <div class="stat-value lectures-total">0</div>
+                        <div class="stat-label">محاضرة</div>
+                        <div class="stat-nav-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div id="hymnsCard" class="stat-item stat-card" onclick="navigateToSection('hymns')">
+                        <div class="stat-value hymns-total">0</div>
+                        <div class="stat-label">لحن</div>
+                        <div class="stat-nav-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <!-- Hymns Section -->
-        <section id="hymnsSection" class="content-section px-4 hidden">
-            <div class="mb-4">
-                <h2 class="text-xl font-bold text-gray-800 mb-2">الألحان</h2>
-                <p class="text-sm text-gray-600">اختر لحناً للاستماع والمشاهدة</p>
-            </div>
-            
-            <div id="hymnsList" class="space-y-3">
-                <!-- Hymns will be loaded here as mobile cards -->
-            </div>
-        </section>
+            <!-- Lectures Section -->
+            <section id="lecturesSection" class="content-section px-4">
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">المحاضرات</h2>
+                    <p class="text-sm text-gray-600">اضغط على أي محاضرة لعرضها</p>
+                </div>
+                
+                <div id="lecturesList" class="space-y-3">
+                    <!-- Lectures will be loaded here as mobile cards -->
+                </div>
+            </section>
+
+            <!-- Hymns Section -->
+            <section id="hymnsSection" class="content-section px-4 hidden">
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">الألحان</h2>
+                    <p class="text-sm text-gray-600">اختر لحناً للاستماع والمشاهدة</p>
+                </div>
+                
+                <div id="hymnsList" class="space-y-3">
+                    <!-- Hymns will be loaded here as mobile cards -->
+                </div>
+            </section>
+        </div>
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <div class="flex">
-            <button class="nav-item active" data-section="lectures">
-                <i class="fas fa-book"></i>
-                <span>المحاضرات</span>
-            </button>
-            <button class="nav-item" data-section="hymns">
-                <i class="fas fa-music"></i>
-                <span>الألحان</span>
-            </button>
-        </div>
-    </nav>
 
     <!-- PDF Modal -->
     <div id="pdfModal" class="mobile-modal hidden">
@@ -583,19 +816,21 @@
             <div class="hymn-container">
                 <!-- Image Display -->
                 <div class="hymn-image-container">
-                    <img id="hymnImage" class="hymn-image" alt="Hymn Image">
-                    
-                    <!-- Image Navigation Arrows -->
-                    <button id="prevImageBtn" onclick="previousImage()" class="absolute left-4 top-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-all" style="display: none;">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <button id="nextImageBtn" onclick="nextImage()" class="absolute right-4 top-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-all" style="display: none;">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    
-                    <!-- Page Indicator -->
-                    <div id="imagePageIndicator" class="absolute bottom-4 left-1/2 right-1/2 bg-black bg-opacity-75 text-white text-sm px-3 py-1 rounded-full text-center" style="display: none;">
-                        صفحة 1 من 1
+                    <div class="relative w-full h-full">
+                        <img id="hymnImage" class="hymn-image" alt="Hymn Image">
+                        
+                        <!-- Navigation Arrows as Overlays -->
+                        <button id="prevImageBtn" onclick="previousImage()" class="image-nav-btn image-nav-prev" style="display: none;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button id="nextImageBtn" onclick="nextImage()" class="image-nav-btn image-nav-next" style="display: none;">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- Page Counter Overlay -->
+                        <div id="imagePageIndicator" class="image-page-counter" style="display: none;">
+                            1 / 1
+                        </div>
                     </div>
                 </div>
                 
@@ -619,6 +854,7 @@
         </div>
     </div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

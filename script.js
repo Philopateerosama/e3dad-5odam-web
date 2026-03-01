@@ -1,112 +1,15 @@
 // Configuration
 const CONFIG = {
-    lecturesPath: './Mo7drat/',
-    hymnsPath: './ألحان/',
+    lecturesPath_S1: './Mo7drat_S1/',
+    lecturesPath_S2: './Mo7drat_S2/',
+    hymnsPath_S1: './al7an_S1/',
+    hymnsPath_S2: './al7an_S2/',
     supportedAudioFormats: ['.ogg', '.mp3'],
     supportedImageFormats: ['.jpg', '.jpeg', '.png']
 };
 
-// Hardcoded data map for lectures
-const LECTURES_DATA = [
-    { id: 1, title: 'الصوم - لاهوت مقارن', path: 'Mo7drat/1.pdf' },
-    { id: 2, title: 'العصر الرسولي - عصر الإستشهاد', path: 'Mo7drat/2.pdf' },
-    { id: 3, title: 'المعمودية - لاهوت مقارن', path: 'Mo7drat/3.pdf' },
-    { id: 4, title: 'المنهج إعداد خدام - سنة أولى 2026', path: 'Mo7drat/4.pdf' },
-    { id: 5, title: 'تعريف الكتاب المقدس', path: 'Mo7drat/5.pdf' },
-    { id: 6, title: 'حساب الأبقطي', path: 'Mo7drat/6.pdf' },
-    { id: 7, title: 'خيمة الاجتماع', path: 'Mo7drat/7.pdf' },
-    { id: 8, title: 'سر التجسد الإلهى ل 2026', path: 'Mo7drat/8.pdf' },
-    { id: 9, title: 'سر التوبة والاعتراف - لاهوت مقارن-1', path: 'Mo7drat/9.pdf' },
-    { id: 10, title: 'طبيعة السيد المسيح', path: 'Mo7drat/10.pdf' },
-    { id: 11, title: 'عقيده الثالوث', path: 'Mo7drat/11.pdf' },
-    { id: 12, title: 'مجمع القسطنطينية 2026', path: 'Mo7drat/12.pdf' },
-    { id: 13, title: 'مجمع نيقية 2026', path: 'Mo7drat/13.pdf' },
-    { id: 14, title: 'مصداقية الكتاب المقدس', path: 'Mo7drat/14.pdf' },
-    { id: 15, title: 'مقدمة عامة فى الطقوس', path: 'Mo7drat/15.pdf' },
-    { id: 16, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat/16.pdf' }
-];
-
-// Hardcoded data map for hymns (Franko filenames with Arabic titles and multiple images)
-const HYMNS_DATA = [
-    { 
-        id: 1, 
-        title: 'أمين أمين طون ثاناطون',
-        audioFile: 'amen amen.ogg',
-        images: ['amen amen.jpg']
-    },
-    { 
-        id: 2, 
-        title: 'ارباع الناقوس آدام',
-        audioFile: 'arba3 el na2os adam.ogg',
-        images: ['arba3 el na2os adam.jpg']
-    },
-    { 
-        id: 3, 
-        title: 'ارباع الناقوس واطس',
-        audioFile: 'arba3 el na2os watos.ogg',
-        images: ['arba3 el na2os watos.jpg']
-    },
-    { 
-        id: 4, 
-        title: 'الليلويا فاى بيبى (1)',
-        audioFile: 'aleloya.ogg',
-        images: ['aleloya.jpg']
-    },
-    { 
-        id: 5, 
-        title: 'الليلويا فاى بيبى (2)',
-        audioFile: 'aleloya.ogg',
-        images: ['aleloya.jpg']
-    },
-    { 
-        id: 6, 
-        title: 'الهيتنات السنوى',
-        audioFile: 'el hetnyat el snawya.ogg',
-        images: [
-            'el hetnyat el snawya 1.jpg',
-            'el hetnyat el snawya 2.jpg',
-            'el hetnyat el snawya 3.jpg',
-            'el hetnyat el snawya 4.jpg',
-            'el hetnyat el snawya 5.jpg',
-            'el hetnyat el snawya 6.jpg',
-            'el hetnyat el snawya 7.jpg'
-        ]
-    },
-    { 
-        id: 7, 
-        title: 'تى شورى',
-        audioFile: 'te shory.ogg',
-        images: ['te shory.jpg']
-    },
-    { 
-        id: 8, 
-        title: 'ذوكصولوجية السيدة العذراء رفع بخور باكر',
-        audioFile: 'zocsologya.ogg',
-        images: [
-            'zocsologya 1.jpg',
-            'zocsologya 2.jpg',
-            'zocsologya 3.jpg'
-        ]
-    },
-    { 
-        id: 9, 
-        title: 'مرد أنجيل عيد الميلاد',
-        audioFile: '3ed el melad.ogg',
-        images: ['3ed el melad.jpg']
-    },
-    { 
-        id: 10, 
-        title: 'مرد انجيل الاحد الاول والثانى',
-        audioFile: 'mard engeal awle 7aden.ogg',
-        images: ['mard engeal awel 7aden.jpg']
-    },
-    { 
-        id: 11, 
-        title: 'مرد انجيل الاحد الثالث والرابع لشهر كيهك',
-        audioFile: 'mard engeal tane 7adean.ogg',
-        images: ['mard engeal tane 7adean.jpg']
-    }
-];
+// Import data from data.js
+// Data will be loaded from LECTURES_DATA and HYMNS_DATA in data.js
 
 // Data storage
 let lectures = [];
@@ -115,9 +18,11 @@ let currentAudio = null;
 let isPlaying = false;
 let currentHymnImages = [];
 let currentImageIndex = 0;
+let currentSemester = null;
+let filteredLectures = [];
+let filteredHymns = [];
 
 // DOM Elements
-const navItems = document.querySelectorAll('.nav-item');
 const contentSections = document.querySelectorAll('.content-section');
 const searchInput = document.getElementById('searchInput');
 const pdfModal = document.getElementById('pdfModal');
@@ -127,28 +32,30 @@ const playBtn = document.getElementById('playBtn');
 const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const timeDisplay = document.getElementById('timeDisplay');
+const lecturesCard = document.getElementById('lecturesCard');
+const hymnsCard = document.getElementById('hymnsCard');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     loadLectures();
     loadHymns();
     setupEventListeners();
-    updateStats();
+    showSemesterSelection(); // Start with semester selection screen
 });
 
 // Load lectures data
 async function loadLectures() {
     try {
-        // Use hardcoded data map
+        // Use data from data.js with semester-specific paths
         lectures = LECTURES_DATA.map(lecture => ({
             id: lecture.id,
             name: lecture.title,
             filename: lecture.path.split('/').pop(),
-            path: lecture.path
+            path: lecture.path,
+            semester: lecture.semester
         }));
 
         console.log('Loaded lectures:', lectures);
-        displayLectures();
     } catch (error) {
         console.error('Error loading lectures:', error);
     }
@@ -157,16 +64,22 @@ async function loadLectures() {
 // Load hymns data
 async function loadHymns() {
     try {
-        // Use Franko filenames with Arabic titles and multiple images
+        // Use data from data.js with semester-specific paths
         hymns = HYMNS_DATA.map(hymn => ({
             id: hymn.id,
             name: hymn.title,
             audioFile: hymn.audioFile,
-            images: hymn.images
+            images: hymn.images,
+            semester: hymn.semester,
+            // Add semester-specific path for audio files
+            audioPath: hymn.semester === 1 ? `al7an_S1/${hymn.audioFile}` : `al7an_S2/${hymn.audioFile}`,
+            // Add semester-specific paths for image files
+            imagePaths: hymn.images.map(image => 
+                hymn.semester === 1 ? `al7an_S1/${image}` : `al7an_S2/${image}`
+            )
         }));
 
         console.log('Loaded hymns:', hymns);
-        displayHymns();
     } catch (error) {
         console.error('Error loading hymns:', error);
     }
@@ -175,11 +88,11 @@ async function loadHymns() {
 // Display lectures
 function displayLectures(searchTerm = '') {
     const lecturesList = document.getElementById('lecturesList');
-    const filteredLectures = lectures.filter(lecture => 
+    const searchFilteredLectures = filteredLectures.filter(lecture => 
         lecture.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    lecturesList.innerHTML = filteredLectures.map(lecture => `
+    lecturesList.innerHTML = searchFilteredLectures.map(lecture => `
         <div class="lecture-card" onclick="openPdfModal('${lecture.name}', '${lecture.path}')">
             <div class="flex items-center space-x-reverse space-x-3">
                 <div class="mary-blue p-3 rounded-full">
@@ -203,11 +116,11 @@ function displayLectures(searchTerm = '') {
 // Display hymns
 function displayHymns(searchTerm = '') {
     const hymnsList = document.getElementById('hymnsList');
-    const filteredHymns = hymns.filter(hymn => 
+    const searchFilteredHymns = filteredHymns.filter(hymn => 
         hymn.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    hymnsList.innerHTML = filteredHymns.map(hymn => `
+    hymnsList.innerHTML = searchFilteredHymns.map(hymn => `
         <div class="hymn-card" onclick="openHymnModal('${hymn.name}', '${hymn.audioFile}', ${JSON.stringify(hymn.images).replace(/"/g, '&quot;')})">
             <div class="flex items-center space-x-reverse space-x-3">
                 <div class="mary-blue p-3 rounded-full">
@@ -238,14 +151,6 @@ function highlightSearchTerm(text, searchTerm) {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Bottom navigation
-    navItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const section = this.dataset.section;
-            switchSection(section);
-        });
-    });
-
     // Search functionality
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value;
@@ -290,25 +195,36 @@ function setupEventListeners() {
     });
 }
 
-// Switch between sections
-function switchSection(section) {
-    // Update navigation items
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.dataset.section === section) {
-            item.classList.add('active');
-        }
-    });
-
-    // Update content sections
-    contentSections.forEach(content => {
-        content.classList.add('hidden');
-    });
-
+// Navigate to section with smooth scrolling and active state
+function navigateToSection(section) {
+    // Update active state on cards
+    lecturesCard.classList.remove('active');
+    hymnsCard.classList.remove('active');
+    
     if (section === 'lectures') {
+        lecturesCard.classList.add('active');
+        // Show lectures section, hide hymns
         document.getElementById('lecturesSection').classList.remove('hidden');
+        document.getElementById('hymnsSection').classList.add('hidden');
+        // Smooth scroll to lectures section
+        setTimeout(() => {
+            document.getElementById('lecturesSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
     } else if (section === 'hymns') {
+        hymnsCard.classList.add('active');
+        // Show hymns section, hide lectures
         document.getElementById('hymnsSection').classList.remove('hidden');
+        document.getElementById('lecturesSection').classList.add('hidden');
+        // Smooth scroll to hymns section
+        setTimeout(() => {
+            document.getElementById('hymnsSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
     }
 }
 
@@ -356,18 +272,22 @@ function openHymnModal(title, audioFile, images) {
     console.log('Attempting to open hymn:', { title, audioFile, images });
     document.getElementById('hymnTitle').textContent = title;
     
+    // Find the hymn data to get semester-specific paths
+    const hymnData = hymns.find(h => h.name === title && h.audioFile === audioFile);
+    if (!hymnData) {
+        console.error('Hymn data not found:', { title, audioFile });
+        return;
+    }
+    
     // Store images and reset index
-    currentHymnImages = images;
+    currentHymnImages = hymnData.imagePaths; // Use full paths
     currentImageIndex = 0;
     
-    // Construct audio path with Franko filename
-    const audioPath = 'al7an/' + audioFile;
-    console.log('Audio path:', audioPath);
-    
-    // Load audio with explicit MIME type
-    audioPlayer.src = audioPath;
+    // Load audio with semester-specific path
+    console.log('Audio path:', hymnData.audioPath);
+    audioPlayer.src = hymnData.audioPath;
     audioPlayer.type = 'audio/ogg';
-    currentAudio = audioPath;
+    currentAudio = hymnData.audioPath;
     
     // Load first image
     loadCurrentImage();
@@ -392,7 +312,7 @@ function openHymnModal(title, audioFile, images) {
 // Load current image in slider
 function loadCurrentImage() {
     const hymnImage = document.getElementById('hymnImage');
-    const imagePath = 'al7an/' + currentHymnImages[currentImageIndex];
+    const imagePath = currentHymnImages[currentImageIndex]; // Already full path
     
     console.log('Loading image:', imagePath);
     hymnImage.src = imagePath;
@@ -405,8 +325,9 @@ function loadCurrentImage() {
             console.log('Alternative failed, showing placeholder...');
             this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjlGQUZCIi8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWODBIODBWNjBaIiBmaWxsPSIjODdDRUVCIi8+CjxwYXRoIGQ9Ik04MCA5MEgxMjBWMTIwSDgwVjkwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8cGF0aCBkPSJNODAgMTIwSDEyMFYxNDBIODBWMTIwWiIgZmlsbD0iIzg3Q0VFQiIvPgo8L3N2Zz4K';
         };
-        // Try .png extension
-        this.src = 'al7an/' + currentHymnImages[currentImageIndex].replace('.jpg', '.png');
+        // Try .png extension as fallback
+        const pngPath = imagePath.replace('.jpg', '.png').replace('.jpeg', '.png');
+        this.src = pngPath;
     };
 }
 
@@ -419,7 +340,7 @@ function updateImageNavigation() {
     if (currentHymnImages.length > 1) {
         prevBtn.style.display = 'flex';
         nextBtn.style.display = 'flex';
-        pageIndicator.textContent = `صفحة ${currentImageIndex + 1} من ${currentHymnImages.length}`;
+        pageIndicator.textContent = `${currentImageIndex + 1} / ${currentHymnImages.length}`;
         pageIndicator.style.display = 'block';
     } else {
         prevBtn.style.display = 'none';
@@ -514,12 +435,94 @@ function updateDuration() {
 // Update counts
 function updateCounts() {
     // Counts are now displayed in the stats section
-    document.querySelector('.lectures-total').textContent = lectures.length;
-    document.querySelector('.hymns-total').textContent = hymns.length;
+    document.querySelector('.lectures-total').textContent = filteredLectures.length;
+    document.querySelector('.hymns-total').textContent = filteredHymns.length;
 }
 
 // Update stats
 function updateStats() {
-    document.querySelector('.lectures-total').textContent = lectures.length;
-    document.querySelector('.hymns-total').textContent = hymns.length;
+    document.querySelector('.lectures-total').textContent = filteredLectures.length;
+    document.querySelector('.hymns-total').textContent = filteredHymns.length;
+}
+
+// Semester Navigation Functions
+function showSemesterSelection() {
+    document.getElementById('semesterSelection').classList.remove('hidden');
+    document.getElementById('contentScreen').classList.add('hidden');
+    document.body.classList.add('semester-selection-active');
+    currentSemester = null;
+    // Hide search bar on landing page
+    document.querySelector('.mobile-search').style.display = 'none';
+}
+
+function selectSemester(semester) {
+    currentSemester = semester;
+    
+    // Filter data by semester
+    filteredLectures = lectures.filter(lecture => lecture.semester === semester);
+    filteredHymns = hymns.filter(hymn => hymn.semester === semester);
+    
+    // Update UI
+    document.getElementById('semesterSelection').classList.add('hidden');
+    document.getElementById('contentScreen').classList.remove('hidden');
+    document.body.classList.remove('semester-selection-active');
+    
+    // Show search bar on content pages
+    document.querySelector('.mobile-search').style.display = 'block';
+    
+    // Update title
+    const semesterTitle = document.getElementById('semesterTitle');
+    if (semester === 1) {
+        semesterTitle.textContent = 'إحصائيات الترم الأول';
+    } else if (semester === 2) {
+        semesterTitle.textContent = 'إحصائيات الترم الثاني';
+    }
+    
+    // Show content or coming soon
+    if (filteredLectures.length === 0 && filteredHymns.length === 0) {
+        showComingSoon();
+    } else {
+        hideComingSoon();
+        displayLectures();
+        displayHymns();
+        updateStats();
+        // Reset to lectures section and set active state
+        navigateToSection('lectures');
+    }
+}
+
+function backToHome() {
+    showSemesterSelection();
+}
+
+function showComingSoon() {
+    // Hide sections
+    document.getElementById('lecturesSection').classList.add('hidden');
+    document.getElementById('hymnsSection').classList.add('hidden');
+    document.querySelector('.mobile-search').style.display = 'none';
+    
+    // Show coming soon message
+    let comingSoonDiv = document.getElementById('comingSoonMessage');
+    if (!comingSoonDiv) {
+        comingSoonDiv = document.createElement('div');
+        comingSoonDiv.id = 'comingSoonMessage';
+        comingSoonDiv.className = 'coming-soon';
+        comingSoonDiv.innerHTML = `
+            <i class="fas fa-clock"></i>
+            <h3>قريباً</h3>
+            <p>محتوى الترم الثاني قيد الإعداد<br>سيتم إضافته قريباً في 2026</p>
+        `;
+        document.getElementById('contentScreen').appendChild(comingSoonDiv);
+    }
+}
+
+function hideComingSoon() {
+    const comingSoonDiv = document.getElementById('comingSoonMessage');
+    if (comingSoonDiv) {
+        comingSoonDiv.remove();
+    }
+    
+    // Show sections and search
+    document.getElementById('lecturesSection').classList.remove('hidden');
+    document.querySelector('.mobile-search').style.display = 'block';
 }
