@@ -14,6 +14,7 @@ const CONFIG = {
 // Data storage
 let lectures = [];
 let hymns = [];
+let copticLessons = [];
 let currentAudio = null;
 let isPlaying = false;
 let currentHymnImages = [];
@@ -21,6 +22,7 @@ let currentImageIndex = 0;
 let currentSemester = null;
 let filteredLectures = [];
 let filteredHymns = [];
+let filteredCoptic = [];
 
 // DOM Elements
 const contentSections = document.querySelectorAll('.content-section');
@@ -39,6 +41,7 @@ const hymnsCard = document.getElementById('hymnsCard');
 document.addEventListener('DOMContentLoaded', function() {
     loadLectures();
     loadHymns();
+    loadCoptic();
     setupEventListeners();
     showSemesterSelection(); // Start with semester selection screen
 });
@@ -83,6 +86,23 @@ async function loadHymns() {
         console.log('Loaded hymns:', hymns);
     } catch (error) {
         console.error('Error loading hymns:', error);
+    }
+}
+
+// Load Coptic lessons data
+async function loadCoptic() {
+    try {
+        // Use data from COPTIC_DATA
+        copticLessons = COPTIC_DATA.map(lesson => ({
+            id: lesson.id,
+            name: lesson.title,
+            youtubeUrl: lesson.youtubeUrl,
+            semester: lesson.semester
+        }));
+
+        console.log('Loaded Coptic lessons:', copticLessons);
+    } catch (error) {
+        console.error('Error loading Coptic lessons:', error);
     }
 }
 
@@ -158,6 +178,34 @@ function highlightSearchTerm(text, searchTerm) {
     return text.replace(regex, '<span class="search-highlight">$1</span>');
 }
 
+// Display Coptic lessons
+function displayCoptic(searchTerm = '') {
+    const copticList = document.getElementById('copticList');
+    const searchFilteredCoptic = filteredCoptic.filter(lesson => 
+        lesson.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    copticList.innerHTML = searchFilteredCoptic.map(lesson => `
+        <div class="coptic-card" onclick="window.open('${lesson.youtubeUrl}', '_blank')">
+            <div class="flex items-center space-x-reverse space-x-3">
+                <div class="coptic-icon bg-amber-100 p-3 rounded-full">
+                    <i class="fas fa-cross text-amber-600 text-lg"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="coptic-title">${highlightSearchTerm(lesson.name, searchTerm)}</h3>
+                    <div class="coptic-meta">
+                        <i class="fas fa-play-circle ml-2 text-xs amber-600"></i>
+                        اضغط للمشاهدة
+                    </div>
+                </div>
+                <i class="fas fa-chevron-left text-gray-400"></i>
+            </div>
+        </div>
+    `).join('');
+
+    updateCounts();
+}
+
 // Setup event listeners
 function setupEventListeners() {
     // Search functionality
@@ -209,12 +257,15 @@ function navigateToSection(section) {
     // Update active state on cards
     lecturesCard.classList.remove('active');
     hymnsCard.classList.remove('active');
+    const copticCard = document.getElementById('copticCard');
+    if (copticCard) copticCard.classList.remove('active');
     
     if (section === 'lectures') {
         lecturesCard.classList.add('active');
-        // Show lectures section, hide hymns
+        // Show lectures section, hide hymns and coptic
         document.getElementById('lecturesSection').classList.remove('hidden');
         document.getElementById('hymnsSection').classList.add('hidden');
+        document.getElementById('copticSection').classList.add('hidden');
         // Smooth scroll to lectures section
         setTimeout(() => {
             document.getElementById('lecturesSection').scrollIntoView({ 
@@ -224,12 +275,26 @@ function navigateToSection(section) {
         }, 100);
     } else if (section === 'hymns') {
         hymnsCard.classList.add('active');
-        // Show hymns section, hide lectures
+        // Show hymns section, hide lectures and coptic
         document.getElementById('hymnsSection').classList.remove('hidden');
         document.getElementById('lecturesSection').classList.add('hidden');
+        document.getElementById('copticSection').classList.add('hidden');
         // Smooth scroll to hymns section
         setTimeout(() => {
             document.getElementById('hymnsSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
+    } else if (section === 'coptic') {
+        if (copticCard) copticCard.classList.add('active');
+        // Show coptic section, hide lectures and hymns
+        document.getElementById('copticSection').classList.remove('hidden');
+        document.getElementById('lecturesSection').classList.add('hidden');
+        document.getElementById('hymnsSection').classList.add('hidden');
+        // Smooth scroll to coptic section
+        setTimeout(() => {
+            document.getElementById('copticSection').scrollIntoView({ 
                 behavior: 'smooth', 
                 block: 'start' 
             });
@@ -448,10 +513,14 @@ function updateCounts() {
     document.querySelector('.hymns-total').textContent = filteredHymns.length;
 }
 
-// Update stats
+// Update statistics counts
 function updateStats() {
     document.querySelector('.lectures-total').textContent = filteredLectures.length;
     document.querySelector('.hymns-total').textContent = filteredHymns.length;
+    const copticTotal = document.querySelector('.coptic-total');
+    if (copticTotal) {
+        copticTotal.textContent = filteredCoptic.length;
+    }
 }
 
 // Semester Navigation Functions
@@ -470,6 +539,7 @@ function selectSemester(semester) {
     // Filter data by semester
     filteredLectures = lectures.filter(lecture => lecture.semester === semester);
     filteredHymns = hymns.filter(hymn => hymn.semester === semester);
+    filteredCoptic = copticLessons.filter(lesson => lesson.semester === semester);
     
     // Update UI
     document.getElementById('semesterSelection').classList.add('hidden');
@@ -488,12 +558,13 @@ function selectSemester(semester) {
     }
     
     // Show content or coming soon
-    if (filteredLectures.length === 0 && filteredHymns.length === 0) {
+    if (filteredLectures.length === 0 && filteredHymns.length === 0 && filteredCoptic.length === 0) {
         showComingSoon();
     } else {
         hideComingSoon();
         displayLectures();
         displayHymns();
+        displayCoptic();
         updateStats();
         // Reset to lectures section and set active state
         navigateToSection('lectures');
@@ -508,6 +579,8 @@ function showComingSoon() {
     // Hide sections
     document.getElementById('lecturesSection').classList.add('hidden');
     document.getElementById('hymnsSection').classList.add('hidden');
+    const copticSection = document.getElementById('copticSection');
+    if (copticSection) copticSection.classList.add('hidden');
     document.querySelector('.mobile-search').style.display = 'none';
     
     // Show coming soon message
@@ -519,7 +592,7 @@ function showComingSoon() {
         comingSoonDiv.innerHTML = `
             <i class="fas fa-clock"></i>
             <h3>قريباً</h3>
-            <p>محتوى الترم الثاني قيد الإعداد<br>سيتم إضافته قريباً في 2026</p>
+            <p>سيتم إضافة الدروس القبطية قريباً</p>
         `;
         document.getElementById('contentScreen').appendChild(comingSoonDiv);
     }

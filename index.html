@@ -185,6 +185,48 @@
             border: 1px solid #f3f4f6;
         }
         
+        /* Coptic cards - mobile optimized */
+        .coptic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #f59e0b;
+        }
+        
+        .coptic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+        }
+        
+        .coptic-icon {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .coptic-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #92400e;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .coptic-meta {
+            display: flex;
+            align-items: center;
+            color: #92400e;
+            font-size: 14px;
+        }
+        
         .hymn-card:last-child {
             margin-bottom: 20px;
         }
@@ -529,6 +571,19 @@
             transition: all 0.3s ease;
         }
         
+        /* Stats Grid for 3 columns */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
         .stat-card:hover .stat-nav-icon {
             opacity: 1;
             transform: translateY(2px);
@@ -538,6 +593,10 @@
             font-size: 20px;
             font-weight: 600;
             color: #87CEEB;
+        }
+        
+        .coptic-total {
+            color: #D97706;
         }
         
         .stat-label {
@@ -760,6 +819,7 @@
                         <div class="flex justify-center space-x-reverse space-x-4 text-sm text-gray-500">
                             <span><i class="fas fa-file-pdf ml-1"></i> 16 محاضرة</span>
                             <span><i class="fas fa-music ml-1"></i> 11 لحن</span>
+                            <span><i class="fas fa-link ml-1"></i> 3 محاضرات قبطي</span>
                         </div>
                     </div>
                 </div>
@@ -777,6 +837,7 @@
                         <div class="flex justify-center space-x-reverse space-x-4 text-sm text-gray-500">
                             <span><i class="fas fa-file-pdf ml-1"></i> 1 محاضرة</span>
                             <span><i class="fas fa-music ml-1"></i> 1 لحن</span>
+                            <span><i class="fas fa-link ml-1"></i> 0 محاضرة قبطي</span>
                         </div>
                     </div>
                 </div>
@@ -796,7 +857,7 @@
             <!-- Stats Section -->
             <div class="stats-container">
                 <h3 class="stats-title" id="semesterTitle">إحصائيات المحتوى</h3>
-                <div class="stats-grid">
+                <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div id="lecturesCard" class="stat-item stat-card" onclick="navigateToSection('lectures')">
                         <div class="stat-value lectures-total">0</div>
                         <div class="stat-label">محاضرة</div>
@@ -807,6 +868,13 @@
                     <div id="hymnsCard" class="stat-item stat-card" onclick="navigateToSection('hymns')">
                         <div class="stat-value hymns-total">0</div>
                         <div class="stat-label">لحن</div>
+                        <div class="stat-nav-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div id="copticCard" class="stat-item stat-card" onclick="navigateToSection('coptic')">
+                        <div class="stat-value coptic-total">0</div>
+                        <div class="stat-label">درس</div>
                         <div class="stat-nav-icon">
                             <i class="fas fa-arrow-down"></i>
                         </div>
@@ -835,6 +903,18 @@
                 
                 <div id="hymnsList" class="space-y-3">
                     <!-- Hymns will be loaded here as mobile cards -->
+                </div>
+            </section>
+            
+            <!-- Coptic Section -->
+            <section id="copticSection" class="content-section px-4 hidden">
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">القبطي</h2>
+                    <p class="text-sm text-gray-600">دروس في اللغة القبطية</p>
+                </div>
+                
+                <div id="copticList" class="space-y-3">
+                    <!-- Coptic lessons will be loaded here -->
                 </div>
             </section>
         </div>

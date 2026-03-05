@@ -1,6 +1,29 @@
 // Data structure with semester classification
 // Semester 1 content (existing)
 // Semester 2 content (newly added)
+// Coptic lessons data
+
+const COPTIC_DATA = [
+    // Semester 1 Coptic Lessons
+    {
+        id: 1,
+        title: 'دروس مبسطة للغة القبطية (الحروف المتحركة)',
+        youtubeUrl: 'https://youtu.be/VrUxwiiQMuo?si=85KHbqcZqRxSKV-d',
+        semester: 1
+    },
+    {
+        id: 2,
+        title: 'الحروف القبطية التي تشبه اللغة الإنجليزية',
+        youtubeUrl: 'https://youtu.be/7lMNoeRrOYg?si=FkwRqnEuDjvenBjf',
+        semester: 1
+    },
+    {
+        id: 3,
+        title: 'الدرس الثالث القبطية (الحروف الديموطيقية)',
+        youtubeUrl: 'https://youtu.be/_Xb4acDUS4w?si=pTOkBQACLg2f0cEJ',
+        semester: 1
+    }
+];
 
 const LECTURES_DATA = [
     // Semester 1 Lectures
