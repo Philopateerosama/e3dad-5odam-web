@@ -52,7 +52,8 @@ async function loadLectures() {
             name: lecture.title,
             filename: lecture.path.split('/').pop(),
             path: lecture.path,
-            semester: lecture.semester
+            semester: lecture.semester,
+            youtubeUrl: lecture.youtubeUrl
         }));
 
         console.log('Loaded lectures:', lectures);
@@ -100,9 +101,17 @@ function displayLectures(searchTerm = '') {
                 </div>
                 <div class="flex-1">
                     <h3 class="lecture-title">${highlightSearchTerm(lecture.name, searchTerm)}</h3>
-                    <div class="lecture-meta">
-                        <i class="fas fa-eye ml-2 text-xs gold-accent"></i>
-                        اضغط لعرض المحاضرة
+                    <div class="lecture-actions">
+                        <button onclick="event.stopPropagation(); openPdfModal('${lecture.name}', '${lecture.path}')" class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1">
+                            <i class="fas fa-file-pdf ml-1 text-xs gold-accent"></i>
+                            قراءة PDF
+                        </button>
+                        ${lecture.youtubeUrl ? `
+                            <button onclick="event.stopPropagation(); window.open('${lecture.youtubeUrl}', '_blank')" class="youtube-btn">
+                                <i class="fab fa-youtube"></i>
+                                شرح الفيديو
+                            </button>
+                        ` : ''}
                     </div>
                 </div>
                 <i class="fas fa-chevron-left text-gray-400"></i>

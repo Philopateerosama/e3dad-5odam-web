@@ -110,11 +110,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid #f3f4f6;
-        }
-        
-        .lecture-card:last-child {
-            margin-bottom: 20px;
+            position: relative;
         }
         
         .lecture-card:active {
@@ -135,6 +131,46 @@
             align-items: center;
             color: #6b7280;
             font-size: 14px;
+        }
+        
+        /* YouTube Button Styles */
+        .youtube-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FF0000;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .youtube-btn:hover {
+            background: #CC0000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
+        }
+        
+        .youtube-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(255, 0, 0, 0.2);
+        }
+        
+        .youtube-btn i {
+            font-size: 14px;
+        }
+        
+        /* Lecture Action Buttons Container */
+        .lecture-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
         }
         
         /* Hymn cards - mobile optimized */
@@ -310,6 +346,30 @@
         
         /* Mobile optimizations */
         @media (max-width: 767px) {
+            .lecture-card {
+                padding: 12px;
+            }
+            
+            .lecture-title {
+                font-size: 15px;
+            }
+            
+            .lecture-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            
+            .youtube-btn {
+                font-size: 11px;
+                padding: 5px 10px;
+                align-self: flex-start;
+            }
+            
+            .youtube-btn i {
+                font-size: 12px;
+            }
+            
             .image-nav-btn {
                 width: 44px;
                 height: 44px;
