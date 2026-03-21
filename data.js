@@ -44,7 +44,9 @@ const LECTURES_DATA = [
     { id: 15, title: 'مهارات الكتاب المقدس 2026', path: 'Mo7drat_S1/16.pdf', semester: 1, youtubeUrl: null },
     
     // Semester 2 Lectures
-    { id: 16, title: 'الجزء الثانى من القداس', path: 'Mo7drat_S2/el goz2 el tane mn el odas.pdf', semester: 2, youtubeUrl: 'https://youtu.be/SaX0N2aGP_Y?si=BWVdwUINfsWxH5By' }
+    { id: 16, title: 'الجزء الثانى من القداس', path: 'Mo7drat_S2/el goz2 el tane mn el odas.pdf', semester: 2, youtubeUrl: 'https://youtu.be/SaX0N2aGP_Y?si=BWVdwUINfsWxH5By' },
+    { id: 17, title: 'مجمع أفسس', path: 'Mo7drat_S2/magaa-efsos.pdf', semester: 2, youtubeUrl: null },
+    { id: 18, title: 'وجود الله', path: 'Mo7drat_S2/wogood-allah.pdf', semester: 2, youtubeUrl: 'https://youtu.be/BA7IYC-Y1cs?si=022fT7Ge98P5TWqS' }
 ];
 
 const HYMNS_DATA = [
@@ -138,6 +140,13 @@ const HYMNS_DATA = [
         title: 'لحن جي بينيوت الاحاد',
         audioFile: 'la7n jabnyot.ogg',
         images: ['la7n jabnyot.jpeg'],
+        semester: 2
+    },
+    { 
+        id: 12, 
+        title: 'لحن أوسبرين',
+        audioFile: 'osperin.ogg',
+        images: ['osperin.jpg'],
         semester: 2
     }
 ];
